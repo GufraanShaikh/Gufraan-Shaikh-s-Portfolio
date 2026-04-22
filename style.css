@@ -1,0 +1,353 @@
+/* ============================================================
+   MINECRAFT PORTFOLIO — style.css
+   ============================================================ */
+
+:root {
+  --grass:       #5d9e2f;
+  --grass-dark:  #3d7a1a;
+  --dirt:        #8b6340;
+  --dirt-dark:   #5c3d1e;
+  --wood:        #9e7a3e;
+  --wood-dark:   #6b4f1e;
+  --stone:       #7a7a7a;
+  --obsidian:    #1a0a2e;
+  --netherrack:  #6b1515;
+  --purple:      #7b2fbe;
+  --purple-light:#a855f7;
+  --green:       #00c785;
+  --gold:        #f5c542;
+  --cyan:        #00d4ff;
+  --white:       #ffffff;
+  --font-pixel:  'Press Start 2P', monospace;
+  --font-display:'Cinzel', serif;
+  --font-body:   'Raleway', sans-serif;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: #111; color: #ddd; overflow-x: hidden; line-height: 1.7; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ── Shared layout ───────────────────────────────────────── */
+.container { max-width: 1080px; margin: 0 auto; padding: 70px 24px; }
+
+.section-header { text-align: center; margin-bottom: 46px; }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 5vw, 2.8rem);
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 14px;
+  letter-spacing: 0.04em;
+}
+
+.tag {
+  font-family: var(--font-pixel);
+  font-size: 0.48rem;
+  letter-spacing: 0.12em;
+  color: #8bbc4f;
+  background: rgba(93,158,47,0.12);
+  border: 1px solid rgba(93,158,47,0.3);
+  padding: 5px 12px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.tag-purple { color: var(--purple-light); background: rgba(168,85,247,0.1); border-color: rgba(168,85,247,0.3); }
+.tag-portal  { color: var(--green);        background: rgba(0,199,133,0.08); border-color: rgba(0,199,133,0.3); }
+
+.underline {
+  height: 4px; width: 70px;
+  background: var(--grass);
+  margin: 0 auto;
+  clip-path: polygon(0 0,100% 0,100% 60%,90% 60%,90% 100%,10% 100%,10% 60%,0 60%);
+}
+.underline-purple { background: var(--purple-light); }
+.underline-portal  { background: var(--green); }
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 11px 26px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn-primary  { background: var(--grass); color: var(--white); border-color: var(--grass-dark); box-shadow: 0 4px 0 var(--grass-dark); }
+.btn-primary:hover  { background: #6dbf38; transform: translateY(-2px); }
+.btn-secondary { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.45); }
+.btn-secondary:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(10,8,20,0.93);
+  border-bottom: 2px solid rgba(93,158,47,0.2);
+  padding: 0 24px; height: 58px;
+}
+.nav-container {
+  max-width: 1080px; margin: 0 auto; height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--font-display); font-size: 1.05rem; font-weight: 900; color: var(--white);
+}
+.logo-block {
+  width: 20px; height: 20px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--grass) 50%, var(--dirt) 50%);
+  border: 2px solid rgba(0,0,0,0.4);
+}
+.logo-accent { color: #8bbc4f; }
+.nav-links { display: flex; list-style: none; gap: 4px; }
+.nav-link {
+  font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);
+  padding: 6px 12px; border-radius: 3px; border: 1px solid transparent;
+  text-transform: uppercase; letter-spacing: 0.07em; transition: all 0.2s;
+}
+.nav-link:hover { color: var(--white); background: rgba(93,158,47,0.1); border-color: rgba(93,158,47,0.3); }
+.nav-toggle-checkbox { display: none; }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-hamburger span { display: block; width: 24px; height: 3px; background: var(--white); border-radius: 2px; }
+
+/* ============================================================
+   HERO — SIMPLE GRASS BLOCK BACKGROUND
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 58px;
+  position: relative;
+
+  /* Layered grass-block style background — no gradients, no glow */
+  background-color: #78a540;
+  background-image:
+    /* dirt layer at bottom */
+    linear-gradient(to top, #8b6340 0px, #8b6340 120px, transparent 120px),
+    /* grass top strip */
+    linear-gradient(to top, transparent 118px, #5d9e2f 118px, #5d9e2f 148px, transparent 148px),
+    /* sky */
+    linear-gradient(to bottom, #5b9bd5 0%, #87ceeb 60%, #b8dff0 100%);
+
+  /* pixel grid overlay to fake block texture */
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+}
+
+/* Pixel grid lines on top to give blocky texture feel */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(0deg,  rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 48px);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; padding: 0 24px; max-width: 780px;
+}
+.hero-tag {
+  font-family: var(--font-pixel); font-size: 0.46rem; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.88);
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);
+  padding: 5px 13px; display: inline-block; margin-bottom: 20px;
+}
+.hero-name {
+  font-family: var(--font-display); font-size: clamp(2.6rem, 8vw, 5rem);
+  font-weight: 900; color: var(--white);
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+  letter-spacing: 0.06em; line-height: 1; margin-bottom: 10px;
+}
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(0.85rem, 2.2vw, 1.1rem);
+  font-weight: 400; color: rgba(255,255,255,0.9);
+  letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px;
+}
+.hero-tagline { font-size: 1rem; color: rgba(255,255,255,0.8); margin-bottom: 32px; font-style: italic; }
+.hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ============================================================
+   BIOME DIVIDERS
+   ============================================================ */
+.biome-divider { background: #111; text-align: center; padding: 16px 0; }
+.divider-row { display: flex; justify-content: center; gap: 2px; margin-bottom: 9px; }
+.db { width: 48px; height: 14px; image-rendering: pixelated; border-top: 1px solid rgba(255,255,255,0.1); }
+.b-grass     { background: var(--grass); }
+.b-dirt      { background: var(--dirt); }
+.b-stone     { background: var(--stone); }
+.b-obsidian  { background: var(--obsidian); }
+.b-netherrack{ background: var(--netherrack); }
+.divider-label { font-family: var(--font-pixel); font-size: 0.43rem; color: rgba(255,255,255,0.38); letter-spacing: 0.12em; }
+
+/* ============================================================
+   ABOUT — STARTER HOUSE
+   ============================================================ */
+.about {
+  background: #1a0f06;
+  border-top: 5px solid;
+  border-image: repeating-linear-gradient(90deg, var(--wood) 0, var(--wood) 47px, var(--wood-dark) 48px, var(--wood-dark) 96px) 5;
+}
+
+.about-layout { display: grid; grid-template-columns: 260px 1fr; gap: 50px; align-items: start; }
+
+.profile-frame { position: relative; }
+.profile-frame img {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  border: 5px solid var(--wood);
+  outline: 2px solid var(--wood-dark);
+}
+.profile-badge {
+  position: absolute; bottom: -13px; left: 50%; transform: translateX(-50%);
+  background: var(--grass); color: var(--white);
+  font-size: 0.68rem; font-weight: 700;
+  padding: 5px 14px; border: 2px solid var(--grass-dark); white-space: nowrap;
+}
+
+.quick-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-top: 28px; }
+.stat-block { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 11px 6px; text-align: center; border-radius: 3px; }
+.stat-num { display: block; font-family: var(--font-display); font-size: 1.2rem; font-weight: 900; color: var(--gold); }
+.stat-label { font-size: 0.58rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.07em; }
+
+.about-para { font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.78); margin-bottom: 22px; }
+
+.info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.info-card {
+  display: flex; align-items: flex-start; gap: 11px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(158,122,62,0.25); border-left: 4px solid var(--wood);
+  padding: 13px; border-radius: 3px;
+}
+.info-card span { font-size: 1.25rem; flex-shrink: 0; }
+.info-card strong { display: block; color: var(--gold); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.info-card p { font-size: 0.8rem; color: rgba(255,255,255,0.58); line-height: 1.5; }
+
+/* ============================================================
+   SKILLS — ENCHANTING ROOM
+   ============================================================ */
+.skills { background: #0a0514; }
+
+.sub-label { font-family: var(--font-pixel); font-size: 0.47rem; color: rgba(255,255,255,0.52); letter-spacing: 0.14em; margin-bottom: 22px; padding-bottom: 9px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.sub-gold { color: var(--gold); }
+.sub-cyan { color: var(--cyan); }
+
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 16px; margin-bottom: 50px; }
+.skill-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(123,47,190,0.3); border-top: 3px solid var(--purple);
+  border-radius: 5px; padding: 18px;
+  transition: transform 0.2s;
+}
+.skill-card:hover { transform: translateY(-3px); }
+.skill-top { display: flex; align-items: center; gap: 11px; margin-bottom: 13px; font-size: 1.3rem; }
+.skill-name { font-family: var(--font-display); font-size: 0.92rem; font-weight: 600; color: var(--white); }
+.bar-wrap { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); height: 11px; border-radius: 2px; overflow: hidden; margin-bottom: 9px; position: relative; }
+.bar { height: 100%; width: var(--fill); background: linear-gradient(90deg, var(--purple), var(--purple-light)); border-radius: 2px; position: relative; }
+.bar-pct { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-size: 0.52rem; font-weight: 700; color: var(--white); }
+.skill-desc { font-size: 0.76rem; color: rgba(255,255,255,0.48); }
+
+.achieve-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 13px; margin-bottom: 50px; }
+.achieve-card {
+  display: flex; align-items: flex-start; gap: 13px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(245,197,66,0.2); border-left: 4px solid var(--gold);
+  border-radius: 5px; padding: 15px;
+  transition: transform 0.2s;
+}
+.achieve-card:hover { transform: translateY(-2px); }
+.achieve-icon { font-size: 1.7rem; flex-shrink: 0; }
+.achieve-card strong { display: block; color: var(--gold); font-size: 0.83rem; margin-bottom: 3px; }
+.achieve-card p { font-size: 0.76rem; color: rgba(255,255,255,0.58); line-height: 1.5; }
+
+.certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px,1fr)); gap: 13px; }
+.cert-card {
+  background: rgba(0,212,255,0.04);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 5px; padding: 18px 14px; text-align: center;
+  display: flex; flex-direction: column; gap: 7px;
+  transition: transform 0.2s;
+}
+.cert-card:hover { transform: translateY(-3px); }
+.cert-org { font-family: var(--font-pixel); font-size: 0.4rem; color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase; }
+.cert-card strong { font-size: 0.8rem; color: rgba(255,255,255,0.85); line-height: 1.5; }
+.cert-year { font-family: var(--font-pixel); font-size: 0.4rem; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; }
+
+/* ============================================================
+   CONTACT — PORTAL ROOM
+   ============================================================ */
+.contact { background: #020e09; }
+
+.contact-intro { font-size: 0.95rem; color: rgba(255,255,255,0.62); max-width: 520px; margin: 12px auto 0; line-height: 1.8; }
+
+.contact-links-card {
+  max-width: 480px; margin: 36px auto 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,199,133,0.2);
+  border-radius: 7px; padding: 26px;
+}
+.contact-links-card h3 { font-family: var(--font-display); font-size: 1rem; color: var(--white); margin-bottom: 20px; letter-spacing: 0.05em; }
+
+.contact-link-item { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 1.2rem; }
+.contact-link-item:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.contact-link-item strong { display: block; color: var(--green); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+.contact-link-item a { font-size: 0.82rem; color: rgba(255,255,255,0.58); word-break: break-all; transition: color 0.2s; }
+.contact-link-item a:hover { color: var(--green); }
+
+.avail-badge { display: flex; align-items: center; gap: 9px; background: rgba(0,199,133,0.08); border: 1px solid rgba(0,199,133,0.28); border-radius: 50px; padding: 8px 15px; font-size: 0.78rem; color: rgba(255,255,255,0.72); margin-top: 18px; }
+.avail-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer { background: #020505; border-top: 2px solid rgba(0,199,133,0.1); padding: 40px 24px; text-align: center; }
+.footer-logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-size: 1.15rem; font-weight: 900; color: var(--white); margin-bottom: 12px; }
+.footer-quote { font-style: italic; color: rgba(255,255,255,0.28); font-size: 0.85rem; margin-bottom: 18px; }
+.footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+.footer-links a { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+.footer-links a:hover { color: var(--green); }
+.footer-copy { font-size: 0.73rem; color: rgba(255,255,255,0.2); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .about-layout { grid-template-columns: 1fr; gap: 40px; }
+  .profile-col { max-width: 260px; margin: 0 auto; width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 55px 18px; }
+  .nav-links {
+    display: none; flex-direction: column;
+    position: absolute; top: 58px; left: 0; right: 0;
+    background: rgba(10,8,20,0.97);
+    border-bottom: 2px solid rgba(93,158,47,0.2);
+    padding: 16px; gap: 3px;
+  }
+  .nav-toggle-checkbox:checked ~ .nav-links { display: flex; }
+  .nav-hamburger { display: flex; }
+  .info-cards { grid-template-columns: 1fr; }
+  .skills-grid, .achieve-grid { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+@media (max-width: 480px) {
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .btn { width: 100%; max-width: 270px; text-align: center; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .db { width: 36px; }
+}
